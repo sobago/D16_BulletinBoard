@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Здравствуй, {{ recipient }}.</h2><br>
+    Получен ответ на Ваш <a href="{{ domain }}{% url 'ad_response_detail' data.id %}">отклик</a> по объявлению <a href="{{ domain }}{% url 'ad' data.ad.id %}">{{ data.ad.title|truncatewords:5 }}</a>
+    <hr>
+    Результат:
+    {% if data.is_accepted %}
+    <span style="color:#27ae60"><strong>Одобрено</strong></span>
+    {% elif data.is_refused %}
+    <span style="color:#e74c3c"><strong>Отказано</strong></span>
+    {% endif %}
+    <hr>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Редактирование объявления
+{% endblock %}
+
+{% block content %}
+    <h3>Объявление {{ ad.id }}</h3>
+    <hr>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.media }}
+        {{ form.as_p }}
+        <input class="btn btn-primary" type="submit" value="Сохранить">
+    </form>
+    <br>
+
+{% endblock %}

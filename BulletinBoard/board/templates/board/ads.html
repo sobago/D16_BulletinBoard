@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Доска объявлений
+{% endblock %}
+
+{% block content %}
+
+    {% if ads %}
+    <table class="table caption-top">
+        <caption>Список объявлений ({{ page_obj.paginator.count }})</caption>
+        {% for ad in ads %}
+            <tr align="left">
+                 <td colspan="2">Объявление id: {{ ad.id }} </td>
+            </tr>
+            <tr align="left">
+                <td width="20%"><b>Заголовок:</b></td>
+                <td><a href="/{{ ad.pk }}">{{ ad.title }}</td>
+            </tr>
+            <tr align="left">
+                <td width="20%"><b>Категория:</b></td>
+                <td>{{ ad.category }}</td>
+            </tr>
+            <tr align="left">
+                <td width="20%"><b>Дата:</b></td>
+                <td>{{ ad.create_datetime|date:'d E Y' }}</td>
+            </tr>
+            <tr align="left">
+                <td width="20%"><b>Текст объявления:</b></td>
+                <td>{{ ad.text|truncatewords:10|safe }}</td>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+            </tr>
+        {% endfor %}
+        </table>
+    {% else %}
+        <h2>Объявлений нет!</h2>
+    {% endif %}
+
+<!--     {% if page_obj.has_previous %}-->
+<!--       <a href="?page=1">1</a>-->
+<!--       {% if page_obj.previous_page_number != 1 %}-->
+<!--           ...-->
+<!--           <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>-->
+<!--       {% endif %}-->
+<!--   {% endif %}-->
+
+<!--   {{ page_obj.number }}-->
+
+<!--   {% if page_obj.has_next %}-->
+<!--       <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>-->
+<!--       {% if paginator.num_pages != page_obj.next_page_number %}-->
+<!--           ...-->
+<!--           <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>-->
+<!--       {% endif %}-->
+<!--   {% endif %}-->
+
+
+{% endblock %}

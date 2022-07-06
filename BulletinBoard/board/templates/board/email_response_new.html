@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Здравствуй, {{ recipient }}. Новый отклик на твое объявление <a href="{{ domain }}{% url 'ad' data.ad.id %}">{{ data.ad.title|truncatewords:5 }}</a></h2>
+    <hr>
+    Текст запроса:<br>
+    <h2>{{ data.title|truncatewords:10 }}</h2>
+    <hr>
+    <a href="{{ domain }}{% url 'ad_response_detail' data.id %}">Открыть</a><br><br>
+    <a href="{{ domain }}{% url 'ad_response_accept' data.id %}">Принять</a><br>
+    <a href="{{ domain }}{% url 'ad_response_refuse' data.id %}">Отклонить</a><br>
+    <hr>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Удаление объявления
+{% endblock %}
+
+{% block content %}
+    <h3>Удаление объявления #{{ ad.id }}</h3>
+    <hr>
+        {% if ad.create_user.id == user.id or user.is_staff == 1 %}
+            <form action="" method="post">
+                {% csrf_token %}
+                <h2>Вы точно хотите удалить объявление?</h2>
+                {{ object.title }}
+                <br>
+                <input class="btn btn-danger" type="submit" value="Удалить">
+            </form>
+        {% else %}
+            Вы не можете удалить это объявление!
+        {% endif %}
+    <hr>
+
+{% endblock %}

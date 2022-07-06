@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Профиль пользователя
+{% endblock %}
+
+{% block content %}
+
+{% if user.id == profile_detail.id %}
+<div  class="row justify-content-center">
+          <div  class="col-4">
+                <h4>Профайл пользователя {{ profile_detail.username }}</h4>
+                <table>
+                        <tr align="left">
+                            <td>Имя: {{ profile_detail.first_name }}<br>
+                                Фамилия: {{ profile_detail.last_name }}<br>
+                                E-mail: {{ profile_detail.email }}<br>
+                                Имя пользователя: {{ profile_detail.username }}<br>
+                                Подписка на новости портала: {% if profile_detail.subscriber %}Включена {% else %} Выключена {%endif%}
+                            </td>
+                        </tr>
+                </table>
+                <hr>
+                <a class="btn btn-primary" href="{% url 'profile_update' profile_detail.id %}" role="button">Изменить</a>
+
+                {% else %}
+                <h2>Отказано в доступе, указан id чужой учетной записи.</h2>
+                <a href="{% url 'profile' user.id %}">Открыть свой профайл</a>
+
+                {% endif %}
+          </div>
+</div>
+
+{% endblock %}

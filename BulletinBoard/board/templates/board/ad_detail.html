@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Объявление
+{% endblock %}
+
+{% block content %}
+    <h3>Объявление #{{ ad.id }}</h3>
+    <hr>
+        <table>
+            <tr align="left">
+                <td><b>Заголовок:</b></td>
+                <td><a href="/{{ ad.pk }}">{{ ad.title }}</td>
+            </tr>
+            <tr align="left">
+                <td><b>Дата:</b></td>
+                <td>{{ ad.create_datetime|date:'d E Y' }}</td>
+            </tr>
+            <tr align="left">
+                <td><b>Автор:</b></td>
+                <td>{{ ad.create_user.username }}</td>
+            </tr>
+            <tr align="left">
+                <td><b>Категория:</b></td>
+                <td>{{ ad.category }}</td>
+            </tr>
+            <tr align="left">
+                <td><b>Текст объявления:</b></td>
+                <td>{{ ad.text|safe }}</td>
+            </tr>
+        </table>
+        <hr>
+    {% if ad.create_user.id == user.id or user.is_staff == 1 %}
+    <table>
+        <tr align="left">
+            <td><a class="btn btn-primary" href="{% url 'ad_edit' ad.id %}" role="button">Изменить</a> </td>
+            <td><a class="btn btn-danger" href="{% url 'ad_delete' ad.id %}" role="button">Удалить</a> </td>
+        </tr>
+    </table>
+    <hr>
+    {% endif %}
+    {% if ad.create_user.id != user.id %}
+        {% if ad_resp %}
+            Вы отправили <a href="{% url 'ad_response_detail' ad_resp.id  %}">отклик</a> на это объявление {{ ad_resp.create_datetime|date:'d E Y' }}<br>
+            Статус запроса:
+            {% if ad_resp.is_accepted %}
+            <span style="color:#27ae60"><strong>Одобрено</strong></span>
+            {% elif ad_resp.is_refused %}
+            <span style="color:#e74c3c"><strong>Отказано</strong></span>
+            {% else %}
+            Ожидает рассмотрения
+            {% endif %}
+        {% else %}
+        <a href="{% url 'ad_response' ad.id %}">Отправить отклик</a>
+        {% endif %}
+    {% endif %}
+
+{% endblock %}

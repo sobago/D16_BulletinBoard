@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Отправка e-mail рассылки подписчикам
+{% endblock %}
+
+{% block content %}
+    <h3>Отправка e-mail рассылки подписчикам</h3>
+    <hr>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.media }}
+        {{ form.as_p }}
+        <input type="submit" value="Отправить">
+    </form>
+    <br>
+
+{% endblock %}

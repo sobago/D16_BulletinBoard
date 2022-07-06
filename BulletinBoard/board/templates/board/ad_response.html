@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Отклик на объявление
+{% endblock %}
+
+{% block content %}
+    <h3>Отклик на объявление {{ pk }}</h3>
+    <hr>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Отправить">
+    </form>
+    <br>
+
+{% endblock %}

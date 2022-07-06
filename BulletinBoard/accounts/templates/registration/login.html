@@ -1,0 +1,36 @@
+{% extends  'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    Вход в систему
+{% endblock %}
+
+{% block content %}
+<div  class="row justify-content-center">
+    <div  class="col-4">
+        <div class="card">
+        <div class="card-body">
+        <h4 class="card-title">Вход:</h4>
+
+        {% if user.is_authenticated %}
+        {{ user.username }}? Вы же уже авторизованы в системе...
+        Впрочем, всегда можно <a href="{% url 'logout' %}">выйти</a>.<br/><br/>
+        <a href="{% url 'profile' user.id %}">Открыть свой профайл</a>
+
+        {% else %}
+
+        <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}">
+
+        {{ form|crispy }}
+        <br>
+        <button type="submit" class="btn btn-primary btn-block">Войти</button>
+        </form><br>
+            <a class="btn btn-secondary" href="{% url 'django_registration_register' %}">Зарегистрироваться</a>
+        {% endif %}
+        </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

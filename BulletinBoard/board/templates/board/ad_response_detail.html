@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Отклик
+{% endblock %}
+
+{% block content %}
+    <h3>Отклик</h3>
+    <hr>
+
+    {% if response.sender.id == user.id or response.recipient.id  == user.id %}
+        <table>
+            <tr align="left">
+                <td><b>Дата:</b></td>
+                <td>{{ response.create_datetime|date:'d E Y' }}</td>
+            </tr>
+            <tr align="left">
+                <td><b>Автор:</b></td>
+                <td>{{ response.sender }}</td>
+            </tr>
+            <tr align="left">
+                <td><b>Получатель:</b></td>
+                <td>{{ response.recipient }}</td>
+            </tr>
+            <tr><td><br></td></tr>
+            <tr align="left">
+                <td><b>Текст запроса:</b></td>
+                <td>{{ response.title }}</td>
+            </tr>
+            <tr><td><br></td></tr>
+            <tr align="left">
+                <td><b>Категория:</b></td>
+                <td>{{ response.ad.category }}</td>
+            </tr>
+            <tr align="left">
+                <td><b>Объявление:</b></td>
+                <td><a href="{% url 'ad' response.ad.id %}">{{ response.ad.title }}</a></td>
+            </tr>
+            <tr><td><br></td></tr>
+            <tr align="left">
+                <td><b>Статус запроса:</b></td>
+                <td>
+                    {% if response.is_accepted %}
+                    <span style="color:#27ae60"><strong>Одобрено</strong></span>
+                    {% elif response.is_refused %}
+                    <span style="color:#e74c3c"><strong>Отказано</strong></span>
+                    {% else %}
+                    Ожидает рассмотрения
+                    {% endif %}
+                </td>
+            </tr>
+            <tr><td><br></td></tr>
+            {% if response.recipient.id == user.id %}
+            <tr align="left">
+                <td><a class="btn btn-primary" href="{% url 'ad_response_accept' response.id %}" role="button">Принять</a> </td>
+                <td><a class="btn btn-danger" href="{% url 'ad_response_refuse' response.id %}" role="button">Отказать</a> </td>
+            </tr>
+            {% endif %}
+        </table>
+        <hr>
+    {% else %}
+        <h3>Это чужой отклик!</h3>
+    {% endif %}
+{% endblock %}
