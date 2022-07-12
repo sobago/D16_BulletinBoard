@@ -91,6 +91,7 @@ class AdResponses(ListView):
 
 
 def ad_response(request, pk):
+    """Форма отклика на объявление, получает request и id объявления"""
     form = AdResponseForm(request.POST or None)
     if request.method == 'POST':
         form = AdResponseForm(request.POST)
@@ -111,6 +112,7 @@ def ad_response(request, pk):
 
 
 def send_emails(request):
+    """Отправка email подписчикам"""
     form = SendEmailsForm(request.POST or None)
     if request.user.is_staff:
         if request.method == 'POST':
@@ -130,6 +132,7 @@ def send_emails(request):
 
 
 def replace_relatve_path_with_absolute_url(message):
+    """Замена ссылки с вложениями для email-рассылок на полный путь"""
     search = settings.MEDIA_URL + settings.CKEDITOR_UPLOAD_PATH
     current_site = str(Site.objects.get_current())
     message = message.replace(search, current_site + search)
@@ -137,6 +140,7 @@ def replace_relatve_path_with_absolute_url(message):
 
 
 def response_accept(request, pk):
+    """Одобрение отклика"""
     user = request.user
     adresp = AdResponse.objects.get(pk=pk)
     if adresp.recipient == user:
@@ -150,6 +154,7 @@ def response_accept(request, pk):
 
 
 def response_refuse(request, pk):
+    """Отказ от отклика"""
     user = request.user
     adresp = AdResponse.objects.get(pk=pk)
     if adresp.recipient == user:

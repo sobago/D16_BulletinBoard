@@ -6,6 +6,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class Category(models.Model):
+    '''Категории объявлений'''
     title = models.CharField(max_length=128, verbose_name='Наименование категории', unique=True)
 
     def __str__(self):
@@ -13,6 +14,7 @@ class Category(models.Model):
 
 
 class Ad(models.Model):
+    """Объявление"""
     title = models.CharField(max_length=254, verbose_name='Заголовок объявления')
     text = RichTextUploadingField(verbose_name='Текст объявления')
     create_datetime = models.DateTimeField(auto_now_add=True)
@@ -27,6 +29,7 @@ class Ad(models.Model):
 
 
 class AdResponse(models.Model):
+    """Отклик на объявление"""
     title = models.CharField(max_length=254, verbose_name='Текст запроса')
     sender = models.OneToOneField(MyUser, on_delete=models.CASCADE, related_name='+', verbose_name='Отправитель')
     recipient = models.OneToOneField(MyUser, on_delete=models.CASCADE, related_name='+', verbose_name='Получатель')
